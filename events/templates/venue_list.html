@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>List of Venues</h1>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Venue</th>
+        <th scope="col">Type</th>
+    </tr>
+    </thead>
+    <tr>
+{% for venue in venues %}
+        <th scope="row">{{ venue.venue_name }}</th>
+        <td>{{ venue.venue_type}}</td>
+        {% endfor %}
+    </tr>
+</table>
+
+{% endblock %}
