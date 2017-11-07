@@ -13,7 +13,7 @@
     </thead>
     <tr>
 {% for venue in venues %}
-        <th scope="row">{{ venue.venue_name }}</th>
+        <th scope="row"><a href="{{ venue.get_absolute_url }}">{{ venue.venue_name }}</a></th>
         <td>{{ venue.venue_type}}</td>
         {% endfor %}
     </tr>

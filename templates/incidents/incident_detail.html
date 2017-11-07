@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ incident.title}}</h1>
+    <small>Reported on: {{ incident.reported}} - {{ incident.reported|timesince}} ago</small>
+</div>
+{% endblock %}

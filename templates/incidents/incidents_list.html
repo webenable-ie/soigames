@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<h1>{{ object.venue_name }}</h1>
-
+<h1>Incidents List</h1>
+<div class="row">
+    <div class="col-sm-2">
+    <a href="{% url 'create_incident' %}" class="btn btn-primary btn-large">Create Incident</a>
+    </div>
+</div>
+<p>&nbsp;</p>
 <table class="table">
     <thead class="thead-dark">
     <tr>
         <th scope="col">Incident</th>
-        <th scope="col">FA</th>
+        <th scope="col">Venue</th>
         <th scope="col">Code</th>
         <th scope="col">Created By</th>
         <th scope="col">Actions</th>
     </tr>
     </thead>
-    {% for item in object.Incidents.all %}
+    {% for item in incidents %}
     <tr>
-        <th scope="row">{{ item.title }}</th>
+        <th scope="row"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></th>
+        <td><a href="{{item.venue.get_absolute_url}}">{{ item.venue}}</a></td>
         <td>{{ item.code}}</td>
         <td>{{ item.user.get_full_name}}</td>
         <td><i class="fa fa-pencil-square-o"></i></td>

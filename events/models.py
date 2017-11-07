@@ -1,6 +1,8 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
+
 
 class Venue(models.Model):
     venue_name = models.CharField(max_length=250, verbose_name='Venue')
@@ -9,10 +11,12 @@ class Venue(models.Model):
     def __str__(self):
         return self.venue_name
 
+    def get_absolute_url(self):
+        return reverse('venue_detail', kwargs={'pk': self.pk})
+
     class Meta:
         verbose_name = 'Venue'
         verbose_name_plural = 'Venues'
-
 
 
 class Event(models.Model):

@@ -1,22 +1,16 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from .models import Venue
 # Create your views here.
 
 # Venues Views
 
-def venue_list(request,):
-    context = {"venues": Venue.objects.all()}
-    template = 'venue_list.html'
 
-    return render(request, template, context)
+class VenueList(ListView):
+    template_name = 'venue_list.html'
+    model = Venue
+    context_object_name = 'venues'
 
-
-# def venue_detail(request, id):
-#     venue = get_object_or_404(Venue, id=id)
-#     context = {"venue": venue}
-#
-#     return render(request, 'venue_detail.html', context)
 
 class VenueDetail(DetailView):
     template_name = 'venue_detail.html'
