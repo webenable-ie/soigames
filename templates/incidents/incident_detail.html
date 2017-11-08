@@ -3,6 +3,17 @@
 {% block content %}
 <div class="container">
     <h1>{{ incident.title}}</h1>
-    <small>Reported on: {{ incident.reported}} - {{ incident.reported|timesince}} ago</small>
+    <p class="my-3"><small>Reported on: {{ incident.reported}} - {{ incident.reported|timesince}} ago</small></p>
+    <hr />
+    <div class="row">
+        <div class="col">
+            <h3><strong>Venue: </strong>{{incident.venue}}</h3>
+            <h3><strong>Functional Area: </strong>{{incident.functional_area}}</h3>
+        </div>
+        <div class="col">
+            <h3><strong>Code: </strong>{{ incident.get_code_display }}</h3>
+            <h3><strong>Involves an Athlete?</strong>{{incident.is_athlete_involved}}</h3>
+        </div>
+    </div>
 </div>
 {% endblock %}

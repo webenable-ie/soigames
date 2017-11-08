@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+from django.forms import ModelForm
+from events.models import Venue
 
 # Create your models here.
 
@@ -14,7 +16,7 @@ class Incident(models.Model):
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     title = models.CharField(max_length=250, verbose_name="Title")
-    venue = models.ForeignKey('events.Venue', verbose_name="Venue", related_name="Incidents", on_delete=None)
+    venue = models.ForeignKey(Venue, verbose_name="Venue", related_name="Incidents", on_delete=None)
     code = models.CharField(max_length=2, choices=INCIDENTS_CODES, default='nn')
     description = models.TextField(verbose_name="Description")
     reported = models.DateTimeField(auto_now_add=True,

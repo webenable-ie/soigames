@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Venue(models.Model):
     venue_name = models.CharField(max_length=250, verbose_name='Venue')
-    venue_type = models.ForeignKey('configtables.VenueType',on_delete=None, verbose_name='Type')
+    venue_type = models.ForeignKey('configtables.VenueType', on_delete=None, verbose_name='Type')
 
     def __str__(self):
         return self.venue_name
