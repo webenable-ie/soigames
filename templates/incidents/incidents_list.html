@@ -17,14 +17,17 @@
         <th scope="col">Actions</th>
     </tr>
     </thead>
-    {% for item in incidents %}
+    {% for obj in objects %}
     <tr>
-        <th scope="row"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></th>
-        <td><a href="{{item.venue.get_absolute_url}}">{{ item.venue}}</a></td>
-        <td>{{ item.code}}</td>
-        <td>{{ item.user.get_full_name}}</td>
-        <td><i class="fa fa-pencil-square-o"></i></td>
+        <th scope="row"><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></th>
+        <td><a href="{{obj.venue.get_absolute_url}}">{{ obj.venue}}</a></td>
+        <td>{{ obj.get_code_display}}</td>
+        <td>{{ obj.user.get_full_name}}</td>
+        <td><a href="{% url 'edit_incident' obj.pk %}"><i class="fa fa-pencil-square-o"></i></a></td>
     </tr>
     {% endfor %}
 </table>
+
+{% include 'snippets/paginator.html' %}
+
 {% endblock %}

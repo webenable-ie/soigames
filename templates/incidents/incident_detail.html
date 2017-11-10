@@ -4,6 +4,7 @@
 <div class="container">
     <h1>{{ incident.title}}</h1>
     <p class="my-3"><small>Reported on: {{ incident.reported}} - {{ incident.reported|timesince}} ago</small></p>
+    <p class="text-info">Reported by: {{ incident.user.get_full_name }}</p>
     <hr />
     <div class="row">
         <div class="col">
@@ -15,5 +16,25 @@
             <h3><strong>Involves an Athlete?</strong>{{incident.is_athlete_involved}}</h3>
         </div>
     </div>
+    <h2 class="mt-5 mb-3">Incident Actions</h2>
+    <p><a href="#" class="btn btn-success btn-large">Add an Action</a></p>
+    <table class="table">
+        <thead>
+            <th scope="col">Action ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Title</th>
+            <th scope="col">Status</th>
+        </thead>
+        {% for action in incident.Actions.all %}
+        <tr>
+            <td>{{ action.pk}}</td>
+            <td>{{ action.created|date}}</td>
+            <td>{{ action.created|time}}</td>
+            <td>{{ action.title}}</td>
+            <td>{{ action.get_status_display}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}
