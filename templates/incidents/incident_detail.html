@@ -2,21 +2,21 @@
 
 {% block content %}
 <div class="container">
-    <h1>{{ incident.title}}</h1>
-    <p class="my-3"><small>Reported on: {{ incident.reported}} - {{ incident.reported|timesince}} ago</small></p>
-    <p class="text-info">Reported by: {{ incident.user.get_full_name }}</p>
+    <h1>{{ instance.title}}</h1>
+    <p class="my-3"><small>Reported on: {{ instance.reported}} - {{ instance.reported|timesince}} ago</small></p>
+    <p class="text-info">Reported by: {{ instance.user.get_full_name }}</p>
     <hr />
     <div class="row">
         <div class="col">
-            <h3><strong>Venue: </strong>{{incident.venue}}</h3>
-            <h3><strong>Functional Area: </strong>{{incident.functional_area}}</h3>
+            <h3><strong>Venue: </strong>{{instance.venue}}</h3>
+            <h3><strong>Functional Area: </strong>{{instance.functional_area}}</h3>
         </div>
         <div class="col">
-            <h3><strong>Code: </strong>{{ incident.get_code_display }}</h3>
-            <h3><strong>Involves an Athlete?</strong>{{incident.is_athlete_involved}}</h3>
+            <h3><strong>Code: </strong>{{ instance.get_code_display }}</h3>
+            <h3><strong>Involves an Athlete?</strong>{{instance.is_athlete_involved}}</h3>
         </div>
     </div>
-    <h2 class="mt-5 mb-3">Incident Actions</h2>
+    <h2 class="mt-5 mb-3">instance Actions</h2>
     <p><a href="#" class="btn btn-success btn-large">Add an Action</a></p>
     <table class="table">
         <thead>
@@ -26,7 +26,7 @@
             <th scope="col">Title</th>
             <th scope="col">Status</th>
         </thead>
-        {% for action in incident.Actions.all %}
+        {% for action in instance.Actions.all %}
         <tr>
             <td>{{ action.pk}}</td>
             <td>{{ action.created|date}}</td>

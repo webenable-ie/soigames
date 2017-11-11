@@ -1,13 +1,13 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
-from django.forms import ModelForm
 from events.models import Venue
 
 # Create your models here.
 
 
 class Incident(models.Model):
+    objects = models.Manager()
     INCIDENTS_CODES = (
         ('nn', 'None'),
         ('mr', 'Minor'),
@@ -67,6 +67,5 @@ class IncidentAction(models.Model):
                                  on_delete=models.CASCADE,
                                  verbose_name="Incidents",
                                  related_name="Actions",
-                                 null=True,
-                                 )
+                                 null=True,)
     details = models.TextField

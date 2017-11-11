@@ -10,6 +10,7 @@ from .forms import IncidentCreateForm, IncidentEditForm, ActionCreateForm
 
 
 def incident_list_view(request):
+    """Incident List View Function"""
     object_list = Incident.objects.all()
     paginator = Paginator(object_list, 3)
 
