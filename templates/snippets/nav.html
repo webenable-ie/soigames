@@ -24,10 +24,10 @@
           </div>
         </li>
       </ul>
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav">
             {% if request.user.is_authenticated %}
-            <li class="nav-item">Hello {{ request.user.first_name }}</li>
-            <li class="nav-item"> | </li>
+            <li class="nav-item"><a class="nav-link">Hello {{ request.user.first_name }}</a></li>
+            <li class="nav-item"><a class="nav-link"> | </a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li> 
             {% else %}
             <li class="nav-item">{% url 'login' %}</li>

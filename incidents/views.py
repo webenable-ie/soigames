@@ -1,10 +1,6 @@
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
-=======
-from django.contrib.auth.decorators import login_required 
->>>>>>> 801e1fccb653e110ed062c40987a5a71d2be3b5d
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
@@ -15,32 +11,39 @@ from .forms import IncidentCreateForm, IncidentEditForm, ActionCreateForm
 # Create your views here.
 
 
-def incident_list_view(request):
-    """Incident List View Function"""
-    object_list = Incident.objects.all()
-    paginator = Paginator(object_list, 3)
+class IncidentListView(ListView):
+    """List all incidents and paginates by 3 """
+    model = Incident
+    template_name = 'incidents/incidents_list.html'
+    paginate_by = 3
 
-    page = request.GET.get('page')
-    try:
-        objects = paginator.page(page)
-    except PageNotAnInteger:
+    def get_context_data(self, *args, **kwargs):
+        context = super(IncidentListView, self).get_context_data(*args, **kwargs)
+        incident_list = Incident.objects.all()
+        paginator = Paginator(incident_list, self.paginate_by)
+
+        page = self.request.GET.get('page')
+        try:
+            objects = paginator.page(page)
+        except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        objects = paginator.page(1)
-    except EmptyPage:
+            objects = paginator.page(1)
+        except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        objects = paginator.page(paginator.num_pages)
-    return render(request, 'incidents/incidents_list.html', {'objects': objects})
+            objects = paginator.page(paginator.num_pages)
+            context['objects'] = objects
+        return context
 
-@login_required
-def incident_detail_view(request, pk=None):
+
+class IncidentDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'incidents/incident_detail.html'
     login_url = '/login/'
-    instance = get_object_or_404(Incident, pk=pk)
-    context = {
-        "title": instance.title,
-        "instance": instance
-    }
+    model = Incident
+    context_object_name = 'incident'
 
-    return render(request, 'incidents/incident_detail.html', context)
+    def get_context_data(self, **kwargs):
+        context = super(IncidentDetailView, self).get_context_data(**kwargs)
+        return context
 
 
 class IncidentEditView(LoginRequiredMixin, UpdateView):
