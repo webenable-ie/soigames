@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^venues/', include('events.urls')),
     url(r'^profile/', include('profiles.urls')),
     url(r'^login/$', LoginView.as_view(), name="login"),
-    url(r'^logout/$', LogoutView.as_view(), name="logout")
+    url(r'^logout/$', LogoutView.as_view(), name="logout"),
+    url(r'^szymek/$', TemplateView.as_view(template_name='szymek.html'), name="szymek")
 
 ]
