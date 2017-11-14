@@ -1,5 +1,6 @@
 from django.views.generic import DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 
@@ -25,7 +26,7 @@ def incident_list_view(request):
         objects = paginator.page(paginator.num_pages)
     return render(request, 'incidents/incidents_list.html', {'objects': objects})
 
-
+@login_required
 def incident_detail_view(request, pk=None):
     instance = get_object_or_404(Incident, pk=pk)
     context = {
