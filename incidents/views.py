@@ -1,8 +1,13 @@
 from django.views.generic import DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
+=======
+from django.contrib.auth.decorators import login_required 
+>>>>>>> 801e1fccb653e110ed062c40987a5a71d2be3b5d
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
+from django.http import Http404
 
 from .models import Incident, IncidentAction
 from .forms import IncidentCreateForm, IncidentEditForm, ActionCreateForm
@@ -28,6 +33,7 @@ def incident_list_view(request):
 
 @login_required
 def incident_detail_view(request, pk=None):
+    login_url = '/login/'
     instance = get_object_or_404(Incident, pk=pk)
     context = {
         "title": instance.title,
