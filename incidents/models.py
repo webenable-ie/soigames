@@ -62,7 +62,7 @@ class IncidentAction(models.Model):
     completed_time = models.DateTimeField(auto_now=False,
                                           auto_now_add=False,
                                           null=True,
-                                          blank=True)
+                                          blank=True,)
     incident = models.ForeignKey(Incident,
                                  on_delete=models.CASCADE,
                                  verbose_name="Incidents",
