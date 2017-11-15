@@ -69,3 +69,6 @@ class IncidentAction(models.Model):
                                  related_name="Actions",
                                  null=True,)
     details = models.TextField
+
+    # def get_absolute_url(self):
+    #     return reverse('incident_detail', kwargs={'pk': self.incident.pk})

@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
+from django.urls import reverse
 
 from .models import Incident, IncidentAction
 from .forms import IncidentCreateForm, IncidentEditForm, ActionCreateForm
@@ -84,15 +85,16 @@ class ActionCreateView(LoginRequiredMixin, CreateView):
     template_name = 'incidents/action_create.html'
 
     def form_valid(self, form):
-        instance = form.save(commit=False)
-        instance.incident = self.request.incident
+        action = form.save(commit=False)
+        incident_id = form.data['incident_id']
+        incident = get_object_or_404(Incident, id=incident_id)
+        action.incident = incident
         return super(ActionCreateView, self).form_valid(form)
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(ActionCreateView, self).get_context_data(*args, **kwargs)
-        context['title'] = 'Record an Incident'
+    def get_context_data(self, **kwargs):
+        context = super(ActionCreateView, self).get_context_data(**kwargs)
+        context['i_id'] = self.kwargs['incident_id']
         return context
 
-
-
-
+    def get_success_url(self):
+        return reverse('incident_detail', args=(self.object.incident.pk,))

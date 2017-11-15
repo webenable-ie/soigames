@@ -10,7 +10,9 @@
             {% endif %}
         <div class="form-group">
         <form method='POST'> {% csrf_token %}
+            <input type="text" name="incident_id" value="{{ i_id }}">
             {{ form.as_p }}
+
             <button class="btn btn-primary" type='submit'>Submit</button>
         </form>
         </div>

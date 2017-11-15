@@ -6,6 +6,7 @@ from configtables.models import VenueType, Sport
 
 
 class Venue(models.Model):
+    objects = models.Manager()
     venue_name = models.CharField(max_length=250, verbose_name='Venue')
     venue_type = models.ForeignKey(VenueType, on_delete=None, verbose_name='Type')
 
@@ -21,6 +22,7 @@ class Venue(models.Model):
 
 
 class Event(models.Model):
+    objects = models.Manager()
     event_name = models.CharField(max_length=250, verbose_name='Event')
     venue = models.ForeignKey(Venue, on_delete=None, verbose_name='Venue', related_name='events')
     event_date = models.DateField(verbose_name='Date', null=True)

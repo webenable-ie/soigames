@@ -17,7 +17,7 @@
         </div>
     </div>
     <h2 class="mt-5 mb-3">incident Actions</h2>
-    <p><a href="#" class="btn btn-success btn-large">Add an Action</a></p>
+    <p><a href="{% url 'add_action' incident_id=incident.pk %}" class="btn btn-success btn-large">Add an Action</a></p>
     <table class="table">
         <thead>
             <th scope="col">Action ID</th>
