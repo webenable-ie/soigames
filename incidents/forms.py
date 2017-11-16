@@ -65,7 +65,7 @@ class IncidentEditForm(forms.ModelForm):
 class ActionCreateForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput({'class': 'form-control', 'placeholder': 'Title'}))
     status = forms.CharField(max_length=1, widget=forms.Select(choices=ACTION_STATUSES, attrs={'class': 'form-control'}))
-    completed_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'class': 'form-control', 'id': 'datepicker'}))
+    completed_time = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={'class': 'form-control', 'id': 'datepicker'}))
     details = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Details here'}))
     class Meta:
         model = IncidentAction

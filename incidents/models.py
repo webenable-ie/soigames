@@ -47,6 +47,7 @@ class Incident(models.Model):
 
 
 class IncidentAction(models.Model):
+    """ Model for actions taken related to Incidents"""
     ACTION_STATUSES = (
         ('P', 'Pending'),
         ('C', 'Complete'),

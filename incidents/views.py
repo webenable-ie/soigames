@@ -1,9 +1,9 @@
-from django.views.generic import DetailView, CreateView, UpdateView, ListView
+from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 from .models import Incident, IncidentAction
 from .forms import IncidentCreateForm, IncidentEditForm, ActionCreateForm
@@ -97,4 +97,11 @@ class ActionCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        return reverse('incident_detail', args=(self.object.incident.pk,))
+        return reverse_lazy('incident_detail', args=(self.object.incident.pk,))
+
+
+class ActionDeleteView(DeleteView):
+    model = IncidentAction
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse_lazy('incident_list')

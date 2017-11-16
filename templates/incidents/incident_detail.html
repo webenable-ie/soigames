@@ -25,6 +25,7 @@
             <th scope="col">Time</th>
             <th scope="col">Title</th>
             <th scope="col">Status</th>
+            <th scope="col">Actions</th>
         </thead>
         {% for action in incident.Actions.all %}
         <tr>
@@ -33,6 +34,7 @@
             <td>{{ action.created|time}}</td>
             <td>{{ action.title}}</td>
             <td>{{ action.get_status_display}}</td>
+            <td><a href="{% url 'delete_action' action.pk %}"><i class="fa fa-times"></i></a></td></td>
         </tr>
         {% endfor %}
     </table>
