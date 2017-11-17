@@ -38,6 +38,7 @@ class Incident(models.Model):
     class Meta:
         verbose_name = 'Incident'
         verbose_name_plural = 'Incidents'
+        ordering = ['-reported']
 
     def get_absolute_url(self):
         return reverse('incident_detail', kwargs={'pk': self.pk})

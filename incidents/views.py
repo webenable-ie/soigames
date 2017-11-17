@@ -1,8 +1,7 @@
 from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404
-from django.http import Http404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 
 from .models import Incident, IncidentAction
@@ -11,28 +10,20 @@ from .forms import IncidentCreateForm, IncidentEditForm, ActionCreateForm
 # Create your views here.
 
 
-class IncidentListView(ListView):
-    """List all incidents and paginates by 3 """
-    model = Incident
-    template_name = 'incidents/incidents_list.html'
-    paginate_by = 3
+def incident_list_view(request):
+    object_list = Incident.objects.all()
+    paginator = Paginator(object_list, 3)
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(IncidentListView, self).get_context_data(*args, **kwargs)
-        incident_list = Incident.objects.all()
-        paginator = Paginator(incident_list, self.paginate_by)
-
-        page = self.request.GET.get('page')
-        try:
-            objects = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            objects = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            objects = paginator.page(paginator.num_pages)
-            context['objects'] = objects
-        return context
+    page = request.GET.get('page')
+    try:
+        objects = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        objects = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        objects = paginator.page(paginator.num_pages)
+    return render(request, 'incidents/incidents_list.html', {'objects': objects})
 
 
 class IncidentDetailView(LoginRequiredMixin, DetailView):
@@ -77,6 +68,13 @@ class IncidentCreateView(LoginRequiredMixin, CreateView):
         context['title'] = 'Record an Incident'
         return context
 
+
+def incident_delete_view(request, pk, template_name='incidents/incident_confirm_delete.html'):
+    instance = get_object_or_404(Incident, pk=pk)
+    if request.method == 'POST':
+        instance.delete()
+        return redirect('incidents_list')
+    return render(request, template_name, {'instance': instance})
 
 class ActionCreateView(LoginRequiredMixin, CreateView):
     model = IncidentAction
