@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
 from configtables.models import VenueType, Sport
 
 # Create your models here.
@@ -8,17 +10,35 @@ from configtables.models import VenueType, Sport
 class Venue(models.Model):
     objects = models.Manager()
     venue_name = models.CharField(max_length=250, verbose_name='Venue')
+    slug = models.SlugField(null=True, blank=True)
     venue_type = models.ForeignKey(VenueType, on_delete=None, verbose_name='Type')
 
     def __str__(self):
         return self.venue_name
 
     def get_absolute_url(self):
-        return reverse('venue_detail', kwargs={'pk': self.pk})
+        return reverse('venue_detail', kwargs={'slug': self.slug})
 
+    def create_slug(self, new_slug=None):
+        slug = slugify(self.venue_name)
+        if new_slug is not None:
+            slug = new_slug
+        else:
+            slug = slugify(self.venue_name)
+        
+        return slug
+            
     class Meta:
         verbose_name = 'Venue'
         verbose_name_plural = 'Venues'
+
+
+def pre_save_venue_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = Venue.create_slug(instance)
+
+
+pre_save.connect(pre_save_venue_receiver, sender=Venue)
 
 
 class Event(models.Model):
