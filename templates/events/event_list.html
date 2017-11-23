@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Events</h1>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Event</th>
+        <th scope="col">Venue</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Sport</th>
+
+    </tr>
+    </thead>
+    {% for event in events %}
+    <tr>
+        <th scope="row">{{event.event_name}}</th>
+        <td>{{ event.venue}}</td>
+        <td>{{ event.event_date}}</td>
+        <td>{{ event.event_start_time}}</td>
+        <td>{{ event.event_sport}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
